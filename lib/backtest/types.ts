@@ -9,6 +9,10 @@ export interface Candle {
 
 export type Signal = 1 | -1 | 0; // 1=매수, -1=매도, 0=보유
 
+/**
+ * generateSignals must return an array of the same length as `candles`.
+ * Indices with no actionable signal must carry `0`, not be omitted.
+ */
 export interface Strategy {
   generateSignals(candles: Candle[]): Signal[];
 }
