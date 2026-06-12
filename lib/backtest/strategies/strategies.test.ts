@@ -37,8 +37,8 @@ describe('BollingerBandStrategy', () => {
 });
 
 describe('buildStrategy + STRATEGY_CATALOG', () => {
-  it('카탈로그에 5개 전략', () => {
-    expect(STRATEGY_CATALOG.length).toBe(5);
+  it('카탈로그에 6개 전략 (프리셋 5 + 커스텀)', () => {
+    expect(STRATEGY_CATALOG.length).toBe(6);
   });
   it('buildStrategy가 각 id로 Strategy를 반환', () => {
     for (const meta of STRATEGY_CATALOG) {

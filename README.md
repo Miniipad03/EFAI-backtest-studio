@@ -6,12 +6,15 @@
 
 ## 주요 기능
 
-- 한국 주식 종목코드로 실시간 OHLCV 데이터 조회 (FinanceDataReader / KRX)
+- **종목명 검색 자동완성** — KRX 전체 2,875종목 이름/코드 검색 + 인기 10종목 원클릭 선택
+- 한국 주식 실시간 OHLCV 데이터 조회 (FinanceDataReader / KRX, API 키 불필요)
 - **5가지 프리셋 전략** 백테스팅: 이동평균 교차 · 변동성 돌파 · RSI 평균회귀 · MACD 교차 · 볼린저밴드
-- 자산곡선 차트 (lightweight-charts v5)
-- 성과지표 카드: 총수익률 · CAGR · 샤프비율 · MDD · 승률 · 거래횟수
+- **🧩 블록 스타일 커스텀 전략 빌더** — 지표 조건 블록 + 매수/매도 동작 블록 조립
+- 자산곡선 차트 + **Buy & Hold 벤치마크 비교** (lightweight-charts v5)
+- **주가 캔들차트 + 매수/매도 시점 마커** — 전략이 언제 사고팔았는지 시각화
+- 성과지표 카드 (설명 툴팁 포함): 총수익률 · CAGR · 샤프비율 · MDD · 승률 · 거래횟수 · Buy&Hold 대비
 - 매매내역 테이블 (매도 거래 기준)
-- 인기 10종목 정적 캐시 폴백 (API 장애 대응)
+- 인기 10종목 정적 캐시 폴백 (API 장애 대응) + 단계별 로딩 안내
 
 ## 기술 스택
 
@@ -21,7 +24,7 @@
 | 차트 | lightweight-charts v5 (TradingView) |
 | 계산 엔진 | 브라우저 TS — 전략·백테스트·지표 모두 클라이언트 실행 |
 | 데이터 API | Vercel Python 서버리스 + FinanceDataReader |
-| 테스트 | Vitest (31 tests) |
+| 테스트 | Vitest (36 tests) |
 | 배포 | Vercel |
 
 ## 로컬 실행
@@ -42,10 +45,10 @@ python scripts/fetch_cache.py
 
 ```bash
 npm test
-# 31 tests, 7 test files — all passing
+# 36 tests, 8 test files — all passing
 ```
 
-테스트 범위: SMA·EMA·RSI·Bollinger·MACD 지표 / MA교차·변동성돌파·RSI·MACD·Bollinger 전략 / 백테스트 엔진 비용모델 / 성과지표 계산
+테스트 범위: SMA·EMA·RSI·Bollinger·MACD 지표 / MA교차·변동성돌파·RSI·MACD·Bollinger·커스텀 전략 / 백테스트 엔진 비용모델 / 성과지표 계산
 
 ## 기술적 특징
 

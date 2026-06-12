@@ -3,9 +3,10 @@ import { VolatilityBreakout } from './volatilityBreakout';
 import { RSIStrategy } from './rsiStrategy';
 import { MACDStrategy } from './macdStrategy';
 import { BollingerBandStrategy } from './bollingerBandStrategy';
+import { CustomStrategy, type CustomRule } from './customStrategy';
 import type { Strategy } from '../types';
 
-export type StrategyId = 'ma_cross' | 'volatility_breakout' | 'rsi' | 'macd' | 'bollinger';
+export type StrategyId = 'ma_cross' | 'volatility_breakout' | 'rsi' | 'macd' | 'bollinger' | 'custom';
 
 export interface StrategyParam {
   key: string; label: string; type: 'number';
@@ -58,14 +59,24 @@ export const STRATEGY_CATALOG: StrategyMeta[] = [
       { key: 'stdDev', label: '표준편차 배수', type: 'number', default: 2, min: 1, max: 3, step: 0.5 },
     ],
   },
+  {
+    id: 'custom', name: '🧩 직접 만들기',
+    description: '지표 조건 블록과 매수/매도 동작 블록을 조립해 나만의 전략을 만듭니다. 같은 날 여러 조건이 맞으면 위에 있는 규칙이 우선합니다.',
+    params: [],
+  },
 ];
 
-export function buildStrategy(id: StrategyId, params: Record<string, number>): Strategy {
+export function buildStrategy(
+  id: StrategyId,
+  params: Record<string, number>,
+  customRules?: CustomRule[],
+): Strategy {
   switch (id) {
     case 'ma_cross': return new MaCross(params.short, params.long);
     case 'volatility_breakout': return new VolatilityBreakout(params.k);
     case 'rsi': return new RSIStrategy(params.period, params.oversold, params.overbought);
     case 'macd': return new MACDStrategy(params.fast, params.slow, params.signal);
     case 'bollinger': return new BollingerBandStrategy(params.period, params.stdDev);
+    case 'custom': return new CustomStrategy(customRules ?? []);
   }
 }
